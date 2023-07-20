@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script type="javascript" src="./scripts.js"></script> -->
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>HypoHelper</h1>
+    <div>
+      <form action="" id="calculator">
+        <label>Target/Idea BG</label>
+        <input
+          type="text"
+          id="targetBG"
+          name="targetBG"
+          placeholder="Enter target BG in mg/dl"
+        />
+        <label>Current BG</label>
+        <input
+          type="text"
+          id="currentBG"
+          name="currentBG"
+          placeholder="Enter current BG in mg/dl"
+        />
+        <label>Current bodyweight</label>
+        <select id="weight">
+          <option value="5">60-100 lbs</option>
+          <option value="4">100-160lbs</option>
+          <option value="3">160-220lbs</option>
+          <option value="2">> 200lbs</option>
+        </select>
+      </form>
+    </div>
+    <button onclick="calculateCarbs()">Calculate</button>
+    <div id="result">
+      <!-- Target BG () - Current BG () / BG Increase per gram of carb () = ()g carb
+      recommended -->
+    </div>
+    <script>
+      var calculator = document.forms["calculator"];
+
+      function getTargetBG() {
+        var targetBG = calculator.elements["targetBG"];
+        var targetBGValue = 0;
+        if (targetBG.value != "") {
+          targetBGValue = parseInt(targetBG.value);
+        }
+        return targetBGValue;
+      }
+
+      function getCurrentBG() {
+        var currentBG = calculator.elements["currentBG"];
+        var currentBGValue = 0;
+        if (currentBG.value != "") {
+          currentBGValue = parseInt(currentBG.value);
+        }
+        return currentBGValue;
+      }
+
+      function getBodyweight() {
+        var bodyweight = 0;
+        var selectedBW = calculator.elements["weight"];
+        bodyweight = parseInt(selectedBW.value);
+        return bodyweight;
+      }
+
+      function calculateCarbs() {
+        var rawCarbs = (getTargetBG() - getCurrentBG()) / getBodyweight();
+        var carbs = Math.ceil(rawCarbs);
+        document.getElementById("result").innerHTML =
+          "recommended carbs:" + carbs + "g";
+      }
+    </script>
+  </body>
+</html>
